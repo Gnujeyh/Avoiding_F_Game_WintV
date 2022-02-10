@@ -3,6 +3,7 @@ var mainState = {
     // 처음에 실행, 이미지와 사운드 load
     preload: function() {
         game.load.image('player', '../images/player.png');
+        game.load.image('player1', '../images/player_1.png');//스페이스 눌렀을 때
         game.load.image('pipe', '../images/3_Obstacle_N.png');//네이비색 장애물
         game.load.image('pipe1', '../images/3_Obstacle_W.png');//흰색 장애물
     },
@@ -12,7 +13,7 @@ var mainState = {
         game.stage.backgroundColor = '#E1EBFA';
         game.physics.startSystem(Phaser.Physics.ARCADE);        
 
-        this.player = game.add.sprite(100, 245, 'player');
+        this.player = game.add.sprite(100, 245, 'player1');
         //물리 시스템 적용
         game.physics.arcade.enable(this.player);
         //중력 적용
@@ -20,16 +21,22 @@ var mainState = {
         //스페이스 누르면 점프
         var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.jump, this);
+        
         // 장애물 그룹
         this.pipes = game.add.group();
         //장애물 타이머
-        this.timer = game.time.events.loop(1500, this.addRowOfPipes, this);
+        this.timer = game.time.events.loop(2700, this.addRowOfPipes, this);
+        //player타이머
+        this.timer = game.time.events.loop(1000, this.playerSpace, this);
+        //장애물 판정
+        pipe=this.physics.add.sprite(60,150,'pipe');
+        pipe1=this.physics.add.sprite(60,150,'pipe1');
     },
     
     //게임의 로직 
     update: function(){
 
-        if (this.player.y < 0 || this.player.y > 490)
+        if (this.player.y < 0 || this.player.y > 850)
             this.restartGame();
 
         game.physics.arcade.overlap(this.player, this.pipes, this.restartGame, null, this);
@@ -39,6 +46,12 @@ var mainState = {
     jump: function() {
     // 중력을 반대로 설정
     this.player.body.velocity.y = -350;
+    //player이미지변화
+    this.player.loadTexture('player');
+    },
+    
+    playerSpace: function(){
+    this.player.loadTexture('player1');
     },
 
     // Game Restart 함수
@@ -79,12 +92,12 @@ var mainState = {
     //장애물의 빈공간을 선택하는 함수
     addRowOfPipes: function() {
         // 무작위로 1과 5 사이의 숫자 선택
-        var hole = Math.floor(Math.random() * 5) + 1;
+        var hole = Math.floor(Math.random() * 4) + 1;
     
         // '빈공간'과 '빈공간 + 1' 위치에 하나의 큰 빈공간이있는 상태
         for (var i = 0; i < 8; i++)
             if (i != hole && i != hole + 1)//선택된 랜덤 숫자가 아닌 곳에 장애물 생성
-                this.addOnePipe(1800, i * 60);
+                this.addOnePipe(1620, i * 150);
     },
           
 };
