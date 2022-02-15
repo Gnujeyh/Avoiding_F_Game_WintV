@@ -52,7 +52,7 @@ var mainState = {
 
         if (this.player.y < 0 || this.player.y > 850 || this.score == 2) {
             
-            if (this.score == 2){
+            if (this.score == 30){
                 this.finishGame();
             }
             else {
