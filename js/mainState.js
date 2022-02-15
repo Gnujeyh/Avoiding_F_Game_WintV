@@ -6,12 +6,28 @@ var mainState = {
         game.load.image('player1', '../images/player_1.png');//스페이스 눌렀을 때
         game.load.image('pipe', '../images/3_Obstacle_N.png');//네이비색 장애물
         game.load.image('pipe1', '../images/3_Obstacle_W.png');//흰색 장애물
+        //game.load.image('score_bg', '../images/score_bg.png');//흰색 장애물
     },
 
     //preload 함수 이후 실행, 여기서 게임 설정 함
     create: function() {
+        //this.score = 0;
         game.stage.backgroundColor = '#E1EBFA';
-        game.physics.startSystem(Phaser.Physics.ARCADE);        
+        game.physics.startSystem(Phaser.Physics.ARCADE); 
+        
+        this.score = -3;
+        
+        //game.add.sprite(0, 0, 'score_bg');
+        
+        game.stage.backgroundColor = '#E1EBFA';
+        game.physics.startSystem(Phaser.Physics.ARCADE); 
+        
+        textStyle_Key = { font: "bold 25px sans-serif", fill: "#46c0f9", align: "center" };
+        textStyle_Value = { font: "bold 25px sans-serif", fill: "#fff", align: "center" };
+        
+        game.add.text(30, 20, "SCORE", textStyle_Key);
+        this.scoreTextValue = game.add.text(120, 20, "0", textStyle_Value);
+        
 
         this.player = game.add.sprite(100, 245, 'player1');
         //물리 시스템 적용
@@ -31,37 +47,61 @@ var mainState = {
         //장애물 판정
         pipe=this.physics.add.sprite(60,150,'pipe');
         pipe1=this.physics.add.sprite(60,150,'pipe1');
+        
     },
     
     //게임의 로직 
     update: function(){
 
-        if (this.player.y < 0 || this.player.y > 850)
-            this.restartGame();
-
+        if (this.player.y < 0 || this.player.y > 850 || this.score == 2) {
+            
+            if (this.score == 30){
+                this.finishGame();
+            }
+            else {
+                this.restartGame();
+            }
+        }
+        
         game.physics.arcade.overlap(this.player, this.pipes, this.restartGame, null, this);
+        
     },
 
     // 새가 점프하는 함수
     jump: function() {
     // 중력을 반대로 설정
     this.player.body.velocity.y = -350;
-    //player이미지변화
+        
+    //space 바를 눌렀지 않았을 경우 player 로딩 이미지
     this.player.loadTexture('player');
     },
     
+    //space 바를 눌렀을 경우 로딩 player 이미지
     playerSpace: function(){
-    this.player.loadTexture('player1');
+        this.player.loadTexture('player1');
     },
+    
+    /*addScore: function(){
+        this.score += 1;
+        this.scoreTextValue.setText(this.score);
+        
+    },*/
 
     // Game Restart 함수
     restartGame: function() {
     // 게임을 다시 시작하게 합니다.
         game.state.start('gameover');
     },
+    
+     // Game Finish 함수
+    finishGame: function() {
+    // 게임을 다시 시작하게 합니다.
+        game.state.start('gamefinish');
+    },
 
     //장애물 추가
     addOnePipe: function(x, y) {
+        
         //장애물 색상 선택
         //숫자 선택:0-남색,1-흰색
         var Obstacle=Math.floor(Math.random() * 2);
@@ -91,6 +131,12 @@ var mainState = {
 
     //장애물의 빈공간을 선택하는 함수
     addRowOfPipes: function() {
+        this.score += 1;
+        if (this.score > 0) {
+            this.scoreTextValue.setText(this.score);
+        }
+        
+        
         // 무작위로 1과 5 사이의 숫자 선택
         var hole = Math.floor(Math.random() * 4) + 1;
     
@@ -98,7 +144,8 @@ var mainState = {
         for (var i = 0; i < 8; i++)
             if (i != hole && i != hole + 1)//선택된 랜덤 숫자가 아닌 곳에 장애물 생성
                 this.addOnePipe(1620, i * 150);
-    },
+
+    }
           
 };
 

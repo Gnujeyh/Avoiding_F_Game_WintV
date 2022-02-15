@@ -1,6 +1,6 @@
 var Over = {
     preload : function() {
-        game.load.image('bg', '../images/2.png');
+        game.load.image('bg', '../images/gameover.jpg');
         game.load.image('gameover', '../images/restart.png');
 
     },

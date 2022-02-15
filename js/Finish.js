@@ -1,11 +1,11 @@
-var Start = {
+var Finish = {
     preload : function() {
-        game.load.image('start_bg', '../images/start_bg.png');
-        game.load.image('gamestart', '../images/start_b.png');
+        game.load.image('finish_bg', '../images/finish.png');
+        game.load.image('gamestart', '../images/restart.png');
 
     },
     create: function() {
-        game.add.sprite(0, 0, 'start_bg');
+        game.add.sprite(0, 0, 'finish_bg');
         game.add.button(0, 0, 'gamestart', this.startGame, this);
     },
     
