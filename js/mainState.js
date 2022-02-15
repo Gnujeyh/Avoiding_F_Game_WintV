@@ -11,9 +11,6 @@ var mainState = {
 
     //preload 함수 이후 실행, 여기서 게임 설정 함
     create: function() {
-        //this.score = 0;
-        game.stage.backgroundColor = '#E1EBFA';
-        game.physics.startSystem(Phaser.Physics.ARCADE); 
         
         this.score = -3;
         
@@ -22,7 +19,7 @@ var mainState = {
         game.stage.backgroundColor = '#E1EBFA';
         game.physics.startSystem(Phaser.Physics.ARCADE); 
         
-        textStyle_Key = { font: "bold 25px sans-serif", fill: "#46c0f9", align: "center" };
+        textStyle_Key = { font: "bold 25px sans-serif", fill: "#161C27", align: "center" };
         textStyle_Value = { font: "bold 25px sans-serif", fill: "#fff", align: "center" };
         
         game.add.text(30, 20, "SCORE", textStyle_Key);
@@ -55,7 +52,7 @@ var mainState = {
 
         if (this.player.y < 0 || this.player.y > 850 || this.score == 2) {
             
-            if (this.score == 30){
+            if (this.score == 2){
                 this.finishGame();
             }
             else {

@@ -6,7 +6,7 @@ var Start = {
     },
     create: function() {
         game.add.sprite(0, 0, 'start_bg');
-        game.add.button(0, 0, 'gamestart', this.startGame, this);
+        game.add.button(710, 700, 'gamestart', this.startGame, this);
     },
     
     startGame: function() {
