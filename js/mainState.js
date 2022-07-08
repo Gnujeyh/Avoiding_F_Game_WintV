@@ -50,7 +50,7 @@ var mainState = {
     //게임의 로직 
     update: function(){
 
-        if (this.player.y < 0 || this.player.y > 850 || this.score == 2) {
+        if (this.player.y < 0 || this.player.y > 850) {
             
             if (this.score == 30){
                 this.finishGame();
