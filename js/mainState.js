@@ -52,7 +52,7 @@ var mainState = {
 
         if (this.player.y < 0 || this.player.y > 850) {
             
-            if (this.score > 30){
+            if (this.score > 50){
                 this.finishGame();
             }
             else {
@@ -87,7 +87,7 @@ var mainState = {
     // Game Restart 함수
     restartGame: function() {
     // 게임을 다시 시작하게 합니다.
-        if(this.score > 30){
+        if(this.score > 50){
             game.state.start('gamefinish');
         }
         else{
