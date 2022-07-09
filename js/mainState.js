@@ -51,13 +51,10 @@ var mainState = {
     update: function(){
 
         if (this.player.y < 0 || this.player.y > 850) {
-            
-            if (this.score == 30){
-                this.finishGame();
-            }
-            else {
                 this.restartGame();
-            }
+        }
+        if (this.score == 30){
+                this.finishGame();
         }
         
         game.physics.arcade.overlap(this.player, this.pipes, this.restartGame, null, this);
