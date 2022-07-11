@@ -53,9 +53,6 @@ var mainState = {
         if (this.player.y < 0 || this.player.y > 850) {
                 this.restartGame();
         }
-        if (this.score == 30){
-                this.finishGame();
-        }
         
         game.physics.arcade.overlap(this.player, this.pipes, this.restartGame, null, this);
         
@@ -84,7 +81,12 @@ var mainState = {
     // Game Restart 함수
     restartGame: function() {
     // 게임을 다시 시작하게 합니다.
-        game.state.start('gameover');
+        if(this.score > 50){
+            game.state.start('gamefinish');
+        }
+        else{
+            game.state.start('gameover');
+        }
     },
     
      // Game Finish 함수
